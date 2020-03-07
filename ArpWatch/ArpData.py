@@ -168,6 +168,7 @@ class ArpData:
         else:
             entry=ArpEntry(ip,mac)
             self.arp_table[ entry.hash_key() ]=entry;
+            ArpWatchLogging.log_message(syslog.LOG_NOTICE,"New ARP entry for %s %s." % (ip,mac))
 
     def entry(self,ip,mac):
         "Retrieve an entry, or None if entry does not exist"

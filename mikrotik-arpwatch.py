@@ -412,7 +412,7 @@ def data_mode():
             ArpWatchLogging.log_message(syslog.LOG_ERR,"select call aborted. Reason '%s'\n" % message)
             retry_count+=1
             
-      except RosAPI.ConnectionError,conn_err: 
+      except RosAPI.ConnectionError,con_err: 
          ArpWatchLogging.log_message(syslog.LOG_ERR,"Lost connection to routerboard %s - %s " %
                                      (global_options.api_host,con_err))
          retry_count+=1
@@ -518,13 +518,13 @@ def drop_privileges(uid_name='nobody', gid_name='nogroup'):
     try:
         new_uid = pwd.getpwnam(uid_name).pw_uid
     except KeyError,err:
-        ArpWatchLogging.log_err(syslog.LOG_ERR,"Drop privileges failed: User name '%s' does not exist" % uid_name)
+        ArpWatchLogging.log_message(syslog.LOG_ERR,"Drop privileges failed: User name '%s' does not exist" % uid_name)
         die_horribly=True
         
     try:
         new_gid = grp.getgrnam(gid_name).gr_gid
     except KeyError,err:
-        ArpWatchLogging.log_err(syslog.LOG_ERR,"Drop privileges failed: Group name '%s' does not exist" % uid_name)
+        ArpWatchLogging.log_message(syslog.LOG_ERR,"Drop privileges failed: Group name '%s' does not exist" % uid_name)
         die_horribly=True
         
     if die_horribly:

@@ -45,14 +45,16 @@ class ApiRos:
         self.currenttag = 0
         
     def login(self, username, pwd):
-        for repl, attrs in self.talk(["/login"]):
-            chal = binascii.unhexlify(attrs['=ret'])
-        md = md5.new()
-        md.update('\x00')
-        md.update(pwd)
-        md.update(chal)
+#        for repl, attrs in self.talk(["/login"]):
+#            chal = binascii.unhexlify(attrs['=ret'])
+#        md = md5.new()
+#        md.update('\x00')
+#        md.update(pwd)
+#        md.update(chal)
+#        replies = self.talk(["/login", "=name=" + username,
+#                             "=response=00" + binascii.hexlify(md.digest())])
         replies = self.talk(["/login", "=name=" + username,
-                             "=response=00" + binascii.hexlify(md.digest())])
+                             "=password=%s" % pwd])
 
         #Check for failed login
         for repl,attrs in replies:
