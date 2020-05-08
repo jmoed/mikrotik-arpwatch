@@ -97,6 +97,19 @@ class ApiRos:
             if w == '': return r
             r.append(w)
             
+    def readDict(self):
+        args=self.readSentence()
+        if len(args) > 2 and args[0] == "!re":
+            ret=dict()
+            for arg in args[1:]:
+                if arg[0] == "=":
+                    # =status=running-ap
+                    idx=arg[1:].find("=")+1
+                    ret[arg[1:idx]]=arg[idx+1:]
+            return ret
+        else:
+            return args
+        
     def writeWord(self, w):
         if DEBUG:
             print "<<< " + w
